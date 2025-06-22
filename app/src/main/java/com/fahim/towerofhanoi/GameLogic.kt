@@ -1,60 +1,58 @@
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Rect
+fun resetGame(numDisks: Int): GameState {
+    return GameState(
+        pegs = listOf(
+            (1..numDisks).toList().reversed(),
+            emptyList(),
+            emptyList()
+        ),
+        numDisks = numDisks
+    )
+}
 
-// GameLogic.kt
+fun moveDisk(state: GameState, fromPeg: Int, toPeg: Int): GameState {
+    if (fromPeg == toPeg || state.isWon) return state
 
-fun handleDragStart(state: GameState, towerIndex: Int): GameState {
-    val tower = state.towers[towerIndex]
-    return if (tower.isNotEmpty()) {
+    val sourcePeg = state.pegs[fromPeg]
+    if (sourcePeg.isEmpty()) return state
+
+    val destPeg = state.pegs[toPeg]
+    val diskToMove = sourcePeg.last()
+
+    return if (destPeg.isEmpty() || diskToMove < destPeg.last()) {
+        val newPegs = state.pegs.map { it.toMutableList() }
+        newPegs[fromPeg].removeAt(newPegs[fromPeg].lastIndex)
+        newPegs[toPeg].add(diskToMove)
+
+        val isWon = newPegs[1].size == state.numDisks || newPegs[2].size == state.numDisks
+
         state.copy(
-            dragState = DragState(
-                currentTower = towerIndex,
-                diskSize = tower.last()
-            )
+            pegs = newPegs,
+            moves = state.moves + 1,
+            isWon = isWon,
+            selectedPeg = null
         )
     } else {
-        state
+        state // Invalid move
     }
 }
 
-fun handleDrag(state: GameState, dragOffset: Offset): GameState {
-    return state.dragState?.let { dragState ->
-        state.copy(
-            dragState = dragState.copy(offset = dragOffset)
-        )
-    } ?: state
+fun handlePegClick(state: GameState, pegIndex: Int): GameState {
+    if (state.isWon || state.draggedDisk != null) return state
+
+    return if (state.selectedPeg == null) {
+        if (state.pegs[pegIndex].isNotEmpty()) {
+            state.copy(selectedPeg = pegIndex)
+        } else {
+            state
+        }
+    } else {
+        moveDisk(state, state.selectedPeg, pegIndex)
+    }
 }
 
-// GameLogic.kt
-fun handleDragEnd(
-    state: GameState,
-    dropPosition: Offset,
-    towerBounds: List<Rect>
-): GameState {
-    state.dragState ?: return state
-
-    val targetTowerIndex = towerBounds.indexOfFirst { bounds ->
-        bounds.contains(dropPosition) || bounds.run {
-            val expanded = inflate(width * 0.2f)  // 20% larger bounds for edge cases
-            expanded.contains(dropPosition)
-        }
-    }
-
-    return when {
-        targetTowerIndex == -1 -> state.copy(dragState = null)  // Dropped outside
-
-        state.isValidMove(targetTowerIndex) -> {
-            val newTowers = state.towers.toMutableList().map { it.toMutableList() }
-            newTowers[state.dragState.currentTower].removeAt(newTowers[state.dragState.currentTower].lastIndex)
-            newTowers[targetTowerIndex].add(state.dragState.diskSize)
-
-            state.copy(
-                towers = newTowers,
-                dragState = null,
-                moveCount = state.moveCount + 1
-            )
-        }
-
-        else -> state.copy(dragState = null)  // Invalid move
-    }
+fun handleDrop(state: GameState, toPeg: Int): GameState {
+    val draggedDisk = state.draggedDisk ?: return state
+    return moveDisk(state, draggedDisk.fromPeg, toPeg).copy(
+        draggedDisk = null
+    )
 }
