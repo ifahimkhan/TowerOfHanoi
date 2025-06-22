@@ -8,7 +8,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -110,8 +109,8 @@ fun TowerOfHanoiGame() {
                         Button(
                             onClick = { state = resetGame(level) },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (state.numDisks == level) MaterialTheme.colorScheme.secondary
-                                else MaterialTheme.colorScheme.surfaceVariant
+                                containerColor = if (state.numDisks == level) MaterialTheme.colorScheme.onSecondaryContainer
+                                else MaterialTheme.colorScheme.secondary
                             )
                         ) {
                             Text("$level")
@@ -135,7 +134,9 @@ fun TowerOfHanoiGame() {
             }
             Button(
                 onClick = { state = resetGame(state.numDisks) },
-                modifier = Modifier.padding(end = 8.dp)
+                modifier = Modifier.padding(end = 8.dp),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onSecondaryContainer)
+
             ) {
                 Icon(Icons.Default.Refresh, contentDescription = "Reset")
                 Spacer(modifier = Modifier.width(4.dp))
