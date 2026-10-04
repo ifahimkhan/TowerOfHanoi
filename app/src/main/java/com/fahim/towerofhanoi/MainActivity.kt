@@ -3,7 +3,9 @@ package com.fahim.towerofhanoi
 import GameState
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -48,6 +50,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
+import com.fahim.towerofhanoi.ui.HanoiGame
+import com.fahim.towerofhanoi.ui.hanoi.HanoiScreen
 import com.fahim.towerofhanoi.ui.theme.TowerOfHanoiTheme
 import handleDrop
 import handlePegClick
@@ -57,10 +61,23 @@ import resetGame
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // The design is light-only, so keep dark system bar icons in every system theme.
+        val lightBars = SystemBarStyle.light(
+            scrim = android.graphics.Color.TRANSPARENT,
+            darkScrim = android.graphics.Color.TRANSPARENT,
+        )
+        enableEdgeToEdge(statusBarStyle = lightBars, navigationBarStyle = lightBars)
         setContent {
             TowerOfHanoiTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    TowerOfHanoiGame()
+                    androidx.compose.foundation.layout.Column(
+                        Modifier.background(Color(0xFF111111)).padding(24.dp),
+                        verticalArrangement = Arrangement.spacedBy(24.dp),
+                    ) {
+                        com.fahim.towerofhanoi.ui.SharinganEye(Modifier.width(300.dp).height(300.dp))
+                        com.fahim.towerofhanoi.ui.SharinganEye(Modifier.width(300.dp).height(300.dp), style = com.fahim.towerofhanoi.ui.SharinganStyle.MANGEKYOU)
+                        Row { com.fahim.towerofhanoi.ui.Tomoe(Modifier.width(80.dp).height(80.dp).background(Color.White)); com.fahim.towerofhanoi.ui.SharinganLoader() }
+                    }
                 }
             }
         }
@@ -354,5 +371,5 @@ fun PegView(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun preview_TowerOfHanoi() {
-    TowerOfHanoiGame()
+    HanoiGame()
 }
