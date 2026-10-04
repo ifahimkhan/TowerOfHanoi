@@ -70,14 +70,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TowerOfHanoiTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    androidx.compose.foundation.layout.Column(
-                        Modifier.background(Color(0xFF111111)).padding(24.dp),
-                        verticalArrangement = Arrangement.spacedBy(24.dp),
-                    ) {
-                        com.fahim.towerofhanoi.ui.SharinganEye(Modifier.width(300.dp).height(300.dp))
-                        com.fahim.towerofhanoi.ui.SharinganEye(Modifier.width(300.dp).height(300.dp), style = com.fahim.towerofhanoi.ui.SharinganStyle.MANGEKYOU)
-                        Row { com.fahim.towerofhanoi.ui.Tomoe(Modifier.width(80.dp).height(80.dp).background(Color.White)); com.fahim.towerofhanoi.ui.SharinganLoader() }
-                    }
+                    HanoiScreen()
                 }
             }
         }
