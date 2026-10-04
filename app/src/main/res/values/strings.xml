@@ -35,5 +35,6 @@
     <string name="toast_hint">Hint: move the top disk from Peg %1$s to Peg %2$s</string>
     <string name="toast_already_solved">Already solved. Tap Reset to play again</string>
     <string name="cd_loading">Loading</string>
+    <string name="splash_tagline">Think three moves ahead</string>
     <string name="toast_goal">Goal: Transfer entire tower to Peg C.</string>
 </resources>
