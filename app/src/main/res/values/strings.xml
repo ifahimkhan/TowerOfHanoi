@@ -1,3 +1,39 @@
 <resources>
     <string name="app_name">TowerOfHanoi</string>
+
+    <string name="hanoi_title">Tower of Hanoi</string>
+    <string name="hanoi_subtitle">Material Logic Game</string>
+    <string name="cd_sound_on">Sound on. Tap to mute</string>
+    <string name="cd_sound_off">Sound off. Tap to unmute</string>
+    <string name="cd_rules">Game rules</string>
+    <string name="cd_hint">Get hint</string>
+
+    <string name="label_moves_optimal">Moves / Optimal</string>
+    <string name="label_time_elapsed">Time Elapsed</string>
+    <string name="efficiency_percent">%1$d%%</string>
+    <string name="cd_efficiency">Efficiency %1$d percent</string>
+    <string name="disk_count">%1$d Disks</string>
+
+    <string name="peg_name">Peg %1$s</string>
+    <string name="peg_start">Start</string>
+    <string name="peg_goal">Goal</string>
+    <string name="cd_peg">Peg %1$s, %2$d disks</string>
+    <string name="cd_peg_selected">Peg %1$s, %2$d disks, top disk lifted</string>
+
+    <string name="action_reset">Reset</string>
+    <string name="action_undo">Undo</string>
+
+    <string name="rules_title">Objective &amp; Rules</string>
+    <!-- Quoted so Android keeps the spaces around the bold peg names. -->
+    <string name="rules_body_prefix">"Move the entire tower from "</string>
+    <string name="rules_body_middle">" to "</string>
+    <string name="rules_body_suffix">. Tap a peg to lift the top disk, then tap another to drop it. Larger disks cannot be placed on smaller ones.</string>
+
+    <string name="toast_invalid_move">Invalid move: can\'t place on smaller disk!</string>
+    <string name="toast_solved">🎉 Solved! Amazing job!</string>
+    <string name="toast_nothing_to_undo">No moves to undo</string>
+    <string name="toast_hint">Hint: move the top disk from Peg %1$s to Peg %2$s</string>
+    <string name="toast_already_solved">Already solved. Tap Reset to play again</string>
+    <string name="cd_loading">Loading</string>
+    <string name="toast_goal">Goal: Transfer entire tower to Peg C.</string>
 </resources>
